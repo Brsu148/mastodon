@@ -10,14 +10,13 @@ on:
     paths:
       - .github/workflows/build-image.yml
       - Dockerfile
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   build-image:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      packages: write
 
     concurrency:
       group: ${{ github.ref }}
