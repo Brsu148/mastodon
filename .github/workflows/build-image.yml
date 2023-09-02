@@ -48,7 +48,7 @@ jobs:
         with:
           images: |
             brsu/mastodon
-            ghcr.io/brsu148/mastodon:edge
+            ghcr.io/brsu148/mastodon
           flavor: |
             latest=auto
           tags: |
