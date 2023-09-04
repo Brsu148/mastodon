@@ -3,12 +3,25 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "main"
+      - 'main'
     tags:
-      - "*"
+      - '*'
+  pull_request:
+    paths:
+      - .github/workflows/build-image.yml
+      - Dockerfile
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-image:
     runs-on: ubuntu-latest
+
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+      
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-buildx-action@v1
