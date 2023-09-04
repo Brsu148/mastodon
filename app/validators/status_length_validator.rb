@@ -48,7 +48,7 @@ class StatusLengthValidator < ActiveModel::Validator
 
   def rewrite_entities(str, entities)
     entities.sort_by! { |entity| entity[:indices].first }
-    result = + ''.dup
+    result = ''.dup
 
     last_index = entities.reduce(0) do |index, entity|
       result << str[index...entity[:indices].first]
