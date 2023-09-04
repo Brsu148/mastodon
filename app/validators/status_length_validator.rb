@@ -32,17 +32,10 @@ class StatusLengthValidator < ActiveModel::Validator
     # will be correctly parsed during formatting, we go through full
     # entity extraction
 
-    urls = Extractor.extract_urls_with_indices(str, extract_url_without_protocol: false)
-    mentions_or_lists = 
-    mentions_or_lists =
-
-    mentions_or
-
-    mentions
+    entities = Extractor.remove_overlapping_entities(
+    Extractor.extract_urls_with_indices(str, extract_url_without_protocol: false) +
     Extractor.extract_mentions_or_lists_with_indices(str)
-    entities = 
-    entities =
-    Extractor.remove_overlapping_entities(urls + mentions_or_lists)
+    )
     
     rewrite_entities(str, entities) do |entity|
       if entity[:url]
