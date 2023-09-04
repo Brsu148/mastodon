@@ -32,8 +32,18 @@ class StatusLengthValidator < ActiveModel::Validator
     # will be correctly parsed during formatting, we go through full
     # entity extraction
 
-    entities = Extractor.remove_overlapping_entities(Extractor.extract_urls_with_indices(str, extract_url_without_protocol: false) + Extractor.extract_mentions_or_lists_with_indices(str))
+    urls = Extractor.extract_urls_with_indices(str, extract_url_without_protocol: false)
+    mentions_or_lists = 
+    mentions_or_lists =
 
+    mentions_or
+
+    mentions
+    Extractor.extract_mentions_or_lists_with_indices(str)
+    entities = 
+    entities =
+    Extractor.remove_overlapping_entities(urls + mentions_or_lists)
+    
     rewrite_entities(str, entities) do |entity|
       if entity[:url]
         URL_PLACEHOLDER
@@ -45,7 +55,7 @@ class StatusLengthValidator < ActiveModel::Validator
 
   def rewrite_entities(str, entities)
     entities.sort_by! { |entity| entity[:indices].first }
-    result = ''.dup
+    result = +''.dup
 
     last_index = entities.reduce(0) do |index, entity|
       result << str[index...entity[:indices].first]
@@ -53,7 +63,7 @@ class StatusLengthValidator < ActiveModel::Validator
       entity[:indices].last
     end
 
-    result << str[last_index..-1]
+    result << str[last_index..]
     result
   end
 end
