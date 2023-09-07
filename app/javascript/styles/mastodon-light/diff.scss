@@ -213,7 +213,7 @@ html {
   .compose-form__modifiers {
     .compose-form__upload__actions .icon-button,
     .compose-form__upload__warning .icon-button {
-      color: lighten($white);
+      color: lighten($white, 100%);
 
       &:active,
       &:focus,
