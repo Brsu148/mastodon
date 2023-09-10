@@ -273,7 +273,7 @@ class EmojiPickerMenu extends React.PureComponent {
         <EmojiPicker
           perLine={5}
           emojiSize={42}
-          sheetSize={64}
+          sheetSize={32}
           custom={buildCustomEmojis(custom_emojis)}
           color=''
           emoji=''
@@ -284,7 +284,7 @@ class EmojiPickerMenu extends React.PureComponent {
           include={categoriesSort}
           recent={frequentlyUsedEmojis}
           skin={skinTone}
-          showPreview={true}
+          showPreview={false}
           showSkinTones={false}
           backgroundImageFn={backgroundImageFn}
           notFound={notFoundFn}
