@@ -284,7 +284,7 @@ class EmojiPickerMenu extends React.PureComponent {
           include={categoriesSort}
           recent={frequentlyUsedEmojis}
           skin={skinTone}
-          showPreview
+          showPreview={true}
           showSkinTones={false}
           backgroundImageFn={backgroundImageFn}
           notFound={notFoundFn}
