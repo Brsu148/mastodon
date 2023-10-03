@@ -98,7 +98,8 @@ USER mastodon
 WORKDIR /opt/mastodon
 
 # Precompile assets
-RUN rails assets:precompile
+RUN OTP_SECRET=precompile_placeholder SECRET_KEY_BASE=precompile_placeholder rails assets:precompile && \
+    yarn cache clean
 
 # Set the work dir and the container entry point
 ENTRYPOINT ["/usr/bin/tini", "--"]
