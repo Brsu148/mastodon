@@ -4,7 +4,7 @@ module Omniauthable
   extend ActiveSupport::Concern
 
   TEMP_EMAIL_PREFIX = 'change@me'
-  TEMP_EMAIL_REGEX  = /\A#{TEMP_EMAIL_PREFIX}/
+  TEMP_EMAIL_REGEX  = /\A#{TEMP_EMAIL_PREFIX}/.freeze
 
   included do
     devise :omniauthable
@@ -56,12 +56,14 @@ module Omniauthable
       user = User.new(user_params_from_auth(email, auth))
 
       begin
-        user.account.avatar_remote_url = auth.info.image if /\A#{URI::DEFAULT_PARSER.make_regexp(%w(http https))}\z/.match?(auth.info.image)
+        if /\A#{URI::DEFAULT_PARSER.make_regexp(%w(http https))}\z/.match?(auth.info.image)
+          user.account.avatar_remote_url = auth.info.image
+        end
       rescue Mastodon::UnexpectedResponseError
         user.account.avatar_remote_url = nil
       end
 
-      user.confirm! if email_is_verified
+      user.skip_confirmation! if email_is_verified
       user.save!
       user
     end

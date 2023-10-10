@@ -1,8 +1,6 @@
-import { Map as ImmutableMap, fromJS } from 'immutable';
-
 import {
-  submitAccountNote,
-} from '../actions/account_notes';
+  NOTIFICATIONS_UPDATE,
+} from '../actions/notifications';
 import {
   ACCOUNT_FOLLOW_SUCCESS,
   ACCOUNT_FOLLOW_REQUEST,
@@ -25,9 +23,9 @@ import {
   DOMAIN_UNBLOCK_SUCCESS,
 } from '../actions/domain_blocks';
 import {
-  NOTIFICATIONS_UPDATE,
-} from '../actions/notifications';
-
+  ACCOUNT_NOTE_SUBMIT_SUCCESS,
+} from '../actions/account_notes';
+import { Map as ImmutableMap, fromJS } from 'immutable';
 
 const normalizeRelationship = (state, relationship) => state.set(relationship.id, fromJS(relationship));
 
@@ -73,11 +71,10 @@ export default function relationships(state = initialState, action) {
   case ACCOUNT_UNMUTE_SUCCESS:
   case ACCOUNT_PIN_SUCCESS:
   case ACCOUNT_UNPIN_SUCCESS:
+  case ACCOUNT_NOTE_SUBMIT_SUCCESS:
     return normalizeRelationship(state, action.relationship);
   case RELATIONSHIPS_FETCH_SUCCESS:
     return normalizeRelationships(state, action.relationships);
-  case submitAccountNote.fulfilled:
-    return normalizeRelationship(state, action.payload.relationship);
   case DOMAIN_BLOCK_SUCCESS:
     return setDomainBlocking(state, action.accounts, true);
   case DOMAIN_UNBLOCK_SUCCESS:

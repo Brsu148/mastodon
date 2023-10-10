@@ -8,12 +8,12 @@ ar:
       user:
         agreement: اتفاقية الخدمة
         email: عنوان البريد الإلكتروني
-        locale: اللغة
+        locale: محلي
         password: كلمة المرور
       user/account:
         username: اسم المستخدم
       user/invite_request:
-        text: الغرض
+        text: السبب
     errors:
       models:
         account:
@@ -24,11 +24,11 @@ ar:
         admin/webhook:
           attributes:
             url:
-              invalid: رابط تشعبي غير صالح
+              invalid: رابط غير صحيح
         doorkeeper/application:
           attributes:
             website:
-              invalid: رابط تشعبي غير صالح
+              invalid: رابط غير صحيح
         import:
           attributes:
             data:
@@ -41,9 +41,9 @@ ar:
           attributes:
             email:
               blocked: يستخدم مزوّد بريد إلكتروني غير مسموح به
-              unreachable: يبدو أنه لا وجود له
+              unreachable: يبدو أنه لا وجود
             role_id:
-              elevated: لا يمكن أن يكون أعلى من دَورِك الحالي
+              elevated: لا يمكن أن يكون أعلى من الدور الحالي
         user_role:
           attributes:
             permissions_as_keys:
@@ -53,7 +53,3 @@ ar:
             position:
               elevated: لا يمكن أن يكون أعلى من دورك الحالي
               own_role: لا يمكن تغييرها مع دورك الحالي
-        webhook:
-          attributes:
-            events:
-              invalid_permissions: لا يمكن إدراج الأحداث التي لا تمتلك حقوقها
