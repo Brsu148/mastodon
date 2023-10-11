@@ -1,4 +1,4 @@
-name: JSON Linting
+name: JavaScript Testing
 on:
   push:
     branches-ignore:
@@ -8,23 +8,27 @@ on:
       - 'package.json'
       - 'yarn.lock'
       - '.nvmrc'
-      - '.prettier*'
-      - '**/*.json'
-      - '.github/workflows/lint-json.yml'
-      - '!app/javascript/mastodon/locales/*.json'
+      - '**/*.js'
+      - '**/*.jsx'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - '**/*.snap'
+      - '.github/workflows/test-js.yml'
 
   pull_request:
     paths:
       - 'package.json'
       - 'yarn.lock'
       - '.nvmrc'
-      - '.prettier*'
-      - '**/*.json'
-      - '.github/workflows/lint-json.yml'
-      - '!app/javascript/mastodon/locales/*.json'
+      - '**/*.js'
+      - '**/*.jsx'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - '**/*.snap'
+      - '.github/workflows/test-js.yml'
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,5 +44,5 @@ jobs:
       - name: Install all yarn packages
         run: yarn --frozen-lockfile
 
-      - name: Prettier
-        run: yarn lint:json
+      - name: Jest testing
+        run: yarn jest --reporters github-actions summary
