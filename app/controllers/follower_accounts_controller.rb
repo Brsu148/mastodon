@@ -3,7 +3,6 @@
 class FollowerAccountsController < ApplicationController
   include AccountControllerConcern
   include SignatureVerification
-  include WebAppControllerConcern
 
   before_action :require_account_signature!, if: -> { request.format == :json && authorized_fetch_mode? }
   before_action :set_cache_headers

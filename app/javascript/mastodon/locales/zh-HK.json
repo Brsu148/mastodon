@@ -532,6 +532,7 @@
   "search_results.all": "全部",
   "search_results.hashtags": "標籤",
   "search_results.nothing_found": "找不到與搜尋字詞相關的內容",
+  "search_results.see_all": "顯示全部",
   "search_results.statuses": "文章",
   "search_results.statuses_fts_disabled": "此 Mastodon 伺服器並未啟用「搜尋文章內章」功能。",
   "search_results.title": "搜尋 {q}",

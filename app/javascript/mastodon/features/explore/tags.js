@@ -49,7 +49,7 @@ class Tags extends React.PureComponent {
     }
 
     return (
-      <div className='explore__links'>
+      <div className='scrollable explore__links' data-nosnippet>
         {banner}
 
         {isLoading ? (<LoadingIndicator />) : hashtags.map(hashtag => (
