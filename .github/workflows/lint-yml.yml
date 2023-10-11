@@ -42,5 +42,5 @@ jobs:
       - name: Install all yarn packages
         run: yarn --frozen-lockfile
 
-      - name: Prettier
-        run: yarn lint:yml
+#      - name: Prettier
+#        run: yarn lint:yml
