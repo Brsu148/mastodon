@@ -111,17 +111,29 @@ jobs:
           tags: ${{ inputs.tags }}
           labels: ${{ inputs.labels }}
 
+#      - uses: docker/build-push-action@v4
+#        with:
+#          context: .
+#          build-args: |
+#            MASTODON_VERSION_PRERELEASE=${{ inputs.version_prerelease }}
+#            MASTODON_VERSION_METADATA=${{ inputs.version_metadata }}
+#          platforms: ${{ inputs.platforms }}
+#          provenance: false
+#          builder: ${{ steps.buildx.outputs.name || steps.buildx-native.outputs.name }}
+#          push: ${{ inputs.push_to_images != '' }}
+#          tags: ${{ steps.meta.outputs.tags }}
+#          labels: ${{ steps.meta.outputs.labels }}
+#          cache-from: ${{ inputs.cache && 'type=gha' || '' }}
+#          cache-to: ${{ inputs.cache && 'type=gha,mode=max' || '' }}
+
       - uses: docker/build-push-action@v4
         with:
           context: .
-          build-args: |
-            MASTODON_VERSION_PRERELEASE=${{ inputs.version_prerelease }}
-            MASTODON_VERSION_METADATA=${{ inputs.version_metadata }}
-#          platforms: ${{ inputs.platforms }}
+          platforms: linux/amd64,linux/arm64
           provenance: false
-          builder: ${{ steps.buildx.outputs.name || steps.buildx-native.outputs.name }}
-          push: ${{ inputs.push_to_images != '' }}
+          builder: ${{ steps.buildx.outputs.name }}
+          push: ${{ github.repository == 'Brsu148/mastodon' && github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: ${{ inputs.cache && 'type=gha' || '' }}
-          cache-to: ${{ inputs.cache && 'type=gha,mode=max' || '' }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
