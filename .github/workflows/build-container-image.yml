@@ -105,7 +105,8 @@ jobs:
         id: meta
 #        if: ${{ inputs.push_to_images != '' }}
         with:
-          images: ${{ inputs.push_to_images }}
+          images: |
+            brsu/mastodon
           flavor: ${{ inputs.flavor }}
           tags: ${{ inputs.tags }}
           labels: ${{ inputs.labels }}
