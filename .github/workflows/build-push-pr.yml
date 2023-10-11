@@ -32,7 +32,8 @@ jobs:
       platforms: linux/amd64,linux/arm64
       use_native_arm64_builder: true
       push_to_images: |
-        ghcr.io/brsu148/mastodon
+        brsu/mastodon
+        ghcr.io/Brsu148/mastodon
       version_metadata: ${{ needs.compute-suffix.outputs.metadata }}
       flavor: |
         latest=auto
