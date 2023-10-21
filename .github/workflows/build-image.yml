@@ -35,7 +35,6 @@ jobs:
       cache: false
       push_to_images: |
         brsu/mastodon
-        ghcr.io/Brsu148/mastodon
 #      version_prerelease: ${{ needs.compute-suffix.outputs.prerelease }}
       labels: ${{ needs.compute-suffix.outputs.prerelease }}
       flavor: |
