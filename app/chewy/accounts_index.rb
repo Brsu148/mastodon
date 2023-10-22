@@ -19,9 +19,18 @@ class AccountsIndex < Chewy::Index
       },
     },
 
+    char_filter: {
+      tsconvert: {
+        type: 'stconvert',
+        keep_both: false,
+        delimiter: '#',
+        convert_type: 't2s',
+      },
+    },
+
     analyzer: {
       natural: {
-        tokenizer: 'ik_max_word',
+        tokenizer: 'standard',
         filter: %w(
           lowercase
           asciifolding
@@ -31,10 +40,11 @@ class AccountsIndex < Chewy::Index
           english_stop
           english_stemmer
         ),
+        char_filter: %w(tsconvert),
       },
 
       verbatim: {
-        tokenizer: 'standard',
+        tokenizer: 'ik_max_word',
         filter: %w(lowercase asciifolding cjk_width),
       },
 

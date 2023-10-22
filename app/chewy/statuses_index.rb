@@ -18,6 +18,7 @@ class StatusesIndex < Chewy::Index
         language: 'possessive_english',
       },
     },
+
     char_filter: {
       tsconvert: {
         type: 'stconvert',
@@ -26,14 +27,15 @@ class StatusesIndex < Chewy::Index
         convert_type: 't2s',
       },
     },
+
     analyzer: {
       verbatim: {
-        tokenizer: 'ik_max_word',
+        tokenizer: 'uax_url_email',
         filter: %w(lowercase),
       },
 
       content: {
-        tokenizer: 'standard',
+        tokenizer: 'ik_max_word',
         filter: %w(
           lowercase
           asciifolding
