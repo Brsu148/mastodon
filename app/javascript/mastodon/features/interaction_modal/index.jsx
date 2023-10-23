@@ -11,7 +11,7 @@ import { throttle, escapeRegExp } from 'lodash';
 
 import { openModal, closeModal } from 'mastodon/actions/modal';
 import api from 'mastodon/api';
-import Button from 'mastodon/components/button';
+import { Button } from 'mastodon/components/button';
 import { Icon }  from 'mastodon/components/icon';
 import { registrationsOpen, sso_redirect } from 'mastodon/initial_state';
 
@@ -27,9 +27,9 @@ const mapStateToProps = (state, { accountId }) => ({
 const mapDispatchToProps = (dispatch) => ({
   onSignupClick() {
     dispatch(closeModal({
-        modalType: undefined,
-        ignoreFocus: false,
-      }));
+      modalType: undefined,
+      ignoreFocus: false,
+    }));
     dispatch(openModal({ modalType: 'CLOSED_REGISTRATIONS' }));
   },
 });
@@ -187,7 +187,7 @@ class LoginForm extends React.PureComponent {
 
   setIFrameRef = (iframe) => {
     this.iframeRef = iframe;
-  }
+  };
 
   handleFocus = () => {
     this.setState({ expanded: true });
