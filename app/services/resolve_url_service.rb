@@ -63,7 +63,7 @@ class ResolveURLService < BaseService
   end
 
   def fetch_resource_service
-    @fetch_resource_service ||= FetchResourceService.new
+    @_fetch_resource_service ||= FetchResourceService.new
   end
 
   def resource_url

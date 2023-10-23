@@ -28,11 +28,14 @@ class StatusLengthValidator < ActiveModel::Validator
   def countable_text(str)
     return '' if str.blank?
 
-    # To ensure that we only give length concessions to entities that
-    # will be correctly parsed during formatting, we go through full
-    # entity extraction
+  # To ensure that we only give length concessions to entities that
+  # will be correctly parsed during formatting, we go through full
+  # entity extraction
 
-    entities = Extractor.remove_overlapping_entities(Extractor.extract_urls_with_indices(str, extract_url_without_protocol: false) + Extractor.extract_mentions_or_lists_with_indices(str))
+  entities = Extractor.remove_overlapping_entities(
+    Extractor.extract_urls_with_indices(str, extract_url_without_protocol: false) +
+    Extractor.extract_mentions_or_lists_with_indices(str)
+  )
 
     rewrite_entities(str, entities) do |entity|
       if entity[:url]
@@ -45,7 +48,7 @@ class StatusLengthValidator < ActiveModel::Validator
 
   def rewrite_entities(str, entities)
     entities.sort_by! { |entity| entity[:indices].first }
-    result = +''
+    result = + ''.dup
 
     last_index = entities.reduce(0) do |index, entity|
       result << str[index...entity[:indices].first]

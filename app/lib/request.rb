@@ -104,7 +104,7 @@ class Request
 
   def perform
     begin
-      response = http_client.request(@verb, @url.to_s, @options.merge(headers: headers))
+      response = http_client.public_send(@verb, @url.to_s, @options.merge(headers: headers))
     rescue => e
       raise e.class, "#{e.message} on #{@url}", e.backtrace[0]
     end
@@ -229,7 +229,6 @@ class Request
 
       contents = truncated_body(limit)
       raise Mastodon::LengthValidationError if contents.bytesize > limit
-
       contents
     end
   end
@@ -263,24 +262,26 @@ class Request
         addr_by_socket = {}
 
         addresses.each do |address|
-          check_private_address(address, host)
+          begin
+            check_private_address(address, host)
 
-          sock     = ::Socket.new(address.is_a?(Resolv::IPv6) ? ::Socket::AF_INET6 : ::Socket::AF_INET, ::Socket::SOCK_STREAM, 0)
-          sockaddr = ::Socket.pack_sockaddr_in(port, address.to_s)
+            sock     = ::Socket.new(address.is_a?(Resolv::IPv6) ? ::Socket::AF_INET6 : ::Socket::AF_INET, ::Socket::SOCK_STREAM, 0)
+            sockaddr = ::Socket.pack_sockaddr_in(port, address.to_s)
 
-          sock.setsockopt(::Socket::IPPROTO_TCP, ::Socket::TCP_NODELAY, 1)
+            sock.setsockopt(::Socket::IPPROTO_TCP, ::Socket::TCP_NODELAY, 1)
 
-          sock.connect_nonblock(sockaddr)
+            sock.connect_nonblock(sockaddr)
 
-          # If that hasn't raised an exception, we somehow managed to connect
-          # immediately, close pending sockets and return immediately
-          socks.each(&:close)
-          return sock
-        rescue IO::WaitWritable
-          socks << sock
-          addr_by_socket[sock] = sockaddr
-        rescue => e
-          outer_e = e
+            # If that hasn't raised an exception, we somehow managed to connect
+            # immediately, close pending sockets and return immediately
+            socks.each(&:close)
+            return sock
+          rescue IO::WaitWritable
+            socks << sock
+            addr_by_socket[sock] = sockaddr
+          rescue => e
+            outer_e = e
+          end
         end
 
         until socks.empty?
@@ -320,14 +321,14 @@ class Request
 
       def check_private_address(address, host)
         addr = IPAddr.new(address.to_s)
-
-        return if Rails.env.development? || private_address_exceptions.any? { |range| range.include?(addr) }
-
+        return if private_address_exceptions.any? { |range| range.include?(addr) }
         raise Mastodon::PrivateNetworkAddressError, host if PrivateAddressCheck.private_address?(addr)
       end
 
       def private_address_exceptions
-        @private_address_exceptions = (ENV['ALLOWED_PRIVATE_ADDRESSES'] || '').split(/(?:\s*,\s*|\s+)/).map { |addr| IPAddr.new(addr) }
+        @private_address_exceptions = begin
+          (ENV['ALLOWED_PRIVATE_ADDRESSES'] || '').split(',').map { |addr| IPAddr.new(addr) }
+        end
       end
     end
   end

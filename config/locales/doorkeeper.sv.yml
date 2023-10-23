@@ -184,7 +184,7 @@ sv:
       write:blocks: blockera konton och domäner
       write:bookmarks: bokmärka inlägg
       write:conversations: tysta och radera konversationer
-      write:favourites: favoritinlägg
+      write:favourites: favoritmarkera inlägg
       write:filters: skapa filter
       write:follows: följa folk
       write:lists: skapa listor

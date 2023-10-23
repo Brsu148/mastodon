@@ -2,20 +2,18 @@
 
 require 'rails_helper'
 
-describe SignatureVerification do
-  let(:wrapped_actor_class) do
-    Class.new do
-      attr_reader :wrapped_account
+describe ApplicationController, type: :controller do
+  class WrappedActor
+    attr_reader :wrapped_account
 
-      def initialize(wrapped_account)
-        @wrapped_account = wrapped_account
-      end
-
-      delegate :uri, :keypair, to: :wrapped_account
+    def initialize(wrapped_account)
+      @wrapped_account = wrapped_account
     end
+
+    delegate :uri, :keypair, to: :wrapped_account
   end
 
-  controller(ApplicationController) do
+  controller do
     include SignatureVerification
 
     before_action :require_actor_signature!, only: [:signature_required]
@@ -35,8 +33,8 @@ describe SignatureVerification do
 
   before do
     routes.draw do
-      match :via => [:get, :post], 'success' => 'anonymous#success'
-      match :via => [:get, :post], 'signature_required' => 'anonymous#signature_required'
+      match via: [:get, :post], 'success' => 'anonymous#success'
+      match via: [:get, :post], 'signature_required' => 'anonymous#signature_required'
     end
   end
 
@@ -95,7 +93,7 @@ describe SignatureVerification do
     end
 
     context 'with a valid actor that is not an Account' do
-      let(:actor) { wrapped_actor_class.new(author) }
+      let(:actor) { WrappedActor.new(author) }
 
       before do
         get :success
@@ -129,7 +127,7 @@ describe SignatureVerification do
       end
     end
 
-    context 'with request with unparsable Date header' do
+    context 'with request with unparseable Date header' do
       before do
         get :success
 
