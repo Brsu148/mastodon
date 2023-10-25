@@ -276,7 +276,7 @@ class EmojiPickerMenuImpl extends PureComponent {
     return (
       <div className={classNames('emoji-picker-dropdown__menu', { selecting: modifierOpen })} style={style} ref={this.setRef}>
         <EmojiPicker
-          perLine={8}
+          perLine={5}
           emojiSize={22}
           sheetSize={32}
           custom={buildCustomEmojis(custom_emojis)}
