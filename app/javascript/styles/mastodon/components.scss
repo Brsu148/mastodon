@@ -284,6 +284,7 @@
   font-size: 11px;
   padding: 0 3px;
   line-height: 27px;
+  white-space: nowrap;
 
   &:hover,
   &:active,
@@ -2466,6 +2467,7 @@ $ui-header-height: 55px;
 
     .navigation-panel__sign-in-banner,
     .navigation-panel__logo,
+    .navigation-panel__banner,
     .getting-started__trends {
       display: none;
     }
